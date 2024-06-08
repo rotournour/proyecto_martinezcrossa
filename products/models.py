@@ -17,6 +17,7 @@ class Category (models.Model):
 
 
 class Products (models.Model):
+    idproduct = models.IntegerField(max_length=100, verbose_name= "Codigo del producto")
     name = models.CharField(max_length=100, verbose_name= "Nombre del producto")
     price = models.FloatField(verbose_name= "Precio del producto")
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE, verbose_name= "Categoria del producto")
@@ -30,7 +31,7 @@ class Products (models.Model):
         verbose_name_plural = 'Products'
 
     def __str__(self):
-        return f'{self.name} de de la categoria {self.category} con un precio de {self.price}'
+        return f'{self.name} con codigo {self.idproduct} de de la categoria {self.category} con un precio de {self.price}'
     
     def setUnavailable(self):
         self.is_available = False

@@ -10,9 +10,9 @@
             <li>
                 {{ item.name }}
         <p class="card-text">Su categoria es <b>{{item.category}}</b></p>
-        <p class="card-text">Su marca es <b>{{item.price}}</b></p>
+        <p class="card-text">Su precio es <b>{{item.price}}</b></p>
                 {% if item.qr_code %}
-                    <img src="{{ item.qr_code.url }}" alt="QR Code for {{ item.name }}">
+                    <img src="{{ item.qr_code.url }}" class="img-fluid rounded-start" alt="QR Code for {{ item.name }}">
                 {% endif %}
             </li>
         {% endfor %}

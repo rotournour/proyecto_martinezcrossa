@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Items</title>
+    <title>Lista de Productos</title>
 </head>
 <body>
-    <h1>Items</h1>
+    <h1>Lista de Productos</h1>
     <ul>
-        {% for item in items %}
+        {% for product in products %}
             <li>
-                {{ item.name }}
-        <p class="card-text">Su categoria es <b>{{item.category}}</b></p>
-        <p class="card-text">Su precio es <b>{{item.price}}</b></p>
-                {% if item.qr_code %}
-                    <img src="{{ item.qr_code.url }}" class="img-fluid rounded-start" alt="QR Code for {{ item.name }}">
+                <h2>{{ product.name }}</h2>
+                <p>{{ product.idproduct }}</p>
+                <p>{{ product.category }}</p>
+                {% if product.qr_code %}
+                    <img src="{{ product.qr_code.url }}" alt="Código QR para {{ product.name }}">
+                {% else %}
+                    <p>No hay QR disponible</p>
                 {% endif %}
             </li>
         {% endfor %}

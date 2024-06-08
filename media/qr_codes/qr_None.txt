@@ -1,0 +1,5 @@
+Codigo del producto: 222
+Nombre del producto: lkdslgkvs
+Precio del producto: 222332.0
+Categoria del producto: Mueble de madera
+Stock: True

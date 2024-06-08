@@ -37,23 +37,20 @@ class Products (models.Model):
         self.is_available = False
 
     def save(self, *args, **kwargs):
+        
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=10,
             border=4,
         )
-        qr.add_data(self.name)
-        qr.add_data(self.price)
-        qr.add_data(self.category)
-        qr.add_data(self.is_available)
-        
+        qr.add_data(f'Codigo del producto: {self.idproduct} - Nombre del producto: {self.name} - Precio del producto:{self.price} - Categoria del producto: {self.category} - Stock: {self.is_available}')
         qr.make(fit=True)
 
         img = qr.make_image(fill='black', back_color='white')
         buffer = BytesIO()
         img.save(buffer, format='PNG')
-        file_name = f'qr_{self.name}.png'
+        file_name = f'qr_{self.idproduct}.png'
         self.qr_code.save(file_name, File(buffer), save=False)
 
         super().save(*args, **kwargs)

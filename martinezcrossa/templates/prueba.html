@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Items</title>
+</head>
+<body>
+    <h1>Items</h1>
+    <ul>
+        {% for item in items %}
+            <li>
+                {{ item.name }}
+        <p class="card-text">Su categoria es <b>{{item.category}}</b></p>
+        <p class="card-text">Su marca es <b>{{item.price}}</b></p>
+                {% if item.qr_code %}
+                    <img src="{{ item.qr_code.url }}" alt="QR Code for {{ item.name }}">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

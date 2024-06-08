@@ -1,3 +1,10 @@
 from django.shortcuts import render
+from .models import Products  # Asegúrate de importar tu modelo
 
-# Create your views here.
+def my_view(request):
+    # Obtén todos los objetos de tu modelo
+    items = Products.objects.all()
+    # Pasa los objetos al contexto de la plantilla
+    return render(request, 'prueba.html', {'items': items})
+
+

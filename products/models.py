@@ -5,7 +5,7 @@ from django.core.files import File
 
 
 class Category (models.Model):
-    categories = models.CharField(max_length=10, null=True, verbose_name= "Categoria del producto")
+    categories = models.CharField(max_length=100, null=True, verbose_name= "Categoria del producto")
     
     def __str__(self):
         return self.categories
@@ -17,7 +17,7 @@ class Category (models.Model):
 
 
 class Products (models.Model):
-    idproduct = models.IntegerField(max_length=100, verbose_name= "Codigo del producto")
+    idproduct = models.IntegerField(verbose_name= "Codigo del producto")
     name = models.CharField(max_length=100, verbose_name= "Nombre del producto")
     price = models.FloatField(verbose_name= "Precio del producto")
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE, verbose_name= "Categoria del producto")

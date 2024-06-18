@@ -1,0 +1,37 @@
+{% block title %}
+Vende
+{% endblock %}
+
+{% block content %}
+<br>
+<h1><p style="margin-left: 10px;"> Carga el producto </h1></br></p>
+
+
+{% if form %}
+
+<form action="" method="POST" enctype="multipart/form-data" style="margin-left: 10px;">
+
+    {% csrf_token %}
+
+    <table>
+        {{form.as_table}}
+    </table>
+
+
+    <input type="submit" value="Cargar">
+    <br><br>
+</form>
+{% endif %}
+
+
+{% if form_errors %}
+<h2 style="color: red;">Errores:</h2>
+{{form_errors}}
+{% endif %}
+
+
+{% if message %}
+<div class="alert alert-success" role="alert">{{message}}</div>
+{% endif %}
+
+{% endblock %}

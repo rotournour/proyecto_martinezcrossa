@@ -1,8 +1,43 @@
-from itertools import product
-from django.shortcuts import render
-from .models import Products  # Asegúrate de importar tu modelo
+from django.shortcuts import render, redirect
+from .models import Products 
+from products.forms import ProductsForm
+from django.views.generic import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import user_passes_test, login_required
+
 
 
 def product_detail(request):
     products = Products.objects.all()
     return render(request, 'products/prueba.html', {'products': products})
+
+
+@login_required
+def create_product (request):
+    if request.method == 'GET':
+        context = {
+            'form': ProductsForm()}
+        return render(request,'products/create.html', context=context)
+    
+    elif request.method == 'POST':
+        form = ProductsForm(request.POST, request.FILES)
+        if form.is_valid():
+            Products.objects.create(
+                idproduct=form.cleaned_data['idproduct'],
+                name=form.cleaned_data['name'],
+                price=form.cleaned_data['price'],
+                category = form.cleaned_data['category'],
+                product_picture = form.cleaned_data ['product_picture']
+                
+            )
+            context = {
+                'message': 'Se ha cargado el producto'
+            }
+            return render(request, 'products/create.html', context=context)
+        else:
+            context = {
+                'form_errors': form.errors,
+                'form': ProductsForm()
+            }
+            return render(request, 'products/create.html', context=context)
+        

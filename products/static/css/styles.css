@@ -1,0 +1,5 @@
+/* styles.css o tu archivo CSS personalizado */
+.card-img-fixed {
+    width: 100%; /* Tamaño específico, ajusta según tus necesidades */
+    height: auto; /* Mantiene la proporción original */
+}

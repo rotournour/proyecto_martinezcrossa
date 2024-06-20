@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Productos
+{% endblock %}
+
+
+{% block content %}
+
+<h1><br> <p style="margin-left: 10px;">Productos disponibles</p></h1>
+
+{% for product in all_products %}
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="row no-gutters">
+                <div class="col-md-6">
+                    {% if product.product_picture %}
+                    <img src="{{ product.product_picture.url }}" class="card-img card-img-fixed" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="{% static 'img/default-product-image.png' %}" class="card-img card-img-fixed" alt="Imagen por defecto">
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {% if product.qr_code %}
+                    <img src="{{ product.qr_code.url }}" class="card-img card-img-fixed" alt="Código QR de {{ product.name }}">
+                    {% else %}
+                    <p>QR no disponible</p>
+                    {% endif %}
+                </div>
+            </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">Su categoría es <b>{{ product.category }}</b></p>
+        <p class="card-text">Su ID es <b>{{ product.idproduct }}</b></p>
+        <p class="card-text">Actualmente hay <b>{{ product.is_available }} en stock</b></p>
+        <p class="card-text">Su precio es <b>${{ product.price }}</b></p>
+    
+        <a href="/products/update/{{ product.idproduct }}/" class="btn btn-primary"
+            style="background-color:#e08385; border: white; width: 220px; display: block; margin-left: auto; margin-right: auto;">Editar</a>
+        <a href="/products/delete/{{ product.idproduct }}/" class="btn btn-primary"
+            style="background-color: red; border: red; display: block; width: 220px; margin-left: auto; margin-right: auto;">Borrar</a>
+    </div>
+</div>
+<br><br>
+    {% endfor %}
+{% endblock %}

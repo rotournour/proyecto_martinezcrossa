@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Actualización del producto
+{% endblock %}
+
+{% block content %}
+    <h1><p style="margin-left: 10px;">Actualizacion de producto</p></h1>
+
+
+
+    {% if form %}
+
+        <form action="" method="POST" style="margin-left: 10px;">
+
+            {% csrf_token %}
+
+            <table>
+                {{form.as_table}}
+            </table>
+
+
+            <input type="submit" value="Actualizar">
+        </p>
+        <br><br>
+        </form>
+    {% endif %}
+
+
+    {% if form_errors %}
+        <h2 style="color: red;" >Errores:</h2>
+        {{form_errors}}
+    {% endif %}
+
+
+    {% if message %}
+    <div class="alert alert-success" role="alert">{{message}}</div>
+    {% endif %}
+
+
+
+
+
+{% endblock %}

@@ -21,8 +21,8 @@ class Products (models.Model):
     name = models.CharField(max_length=100, verbose_name= "Nombre del producto")
     price = models.FloatField(verbose_name= "Precio del producto")
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE, verbose_name= "Categoria del producto")
-    is_available = models.BooleanField(default=True)
-    product_picture = models.ImageField(upload_to='products_images', null=True, blank=True)
+    is_available = models.IntegerField(verbose_name= "Stock")
+    product_picture = models.ImageField(upload_to='products_images', null=True, blank=True, verbose_name= "Imagen del producto")
     qr_code = models.ImageField(upload_to='qr_codes', blank=True, null=True)
     
     class Meta():

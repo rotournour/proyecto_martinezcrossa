@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <title> {% block title %} {% endblock %} | Vintage Store </title>
+    <title> {% block title %} {% endblock %} | MartinezCrossa </title>
 </head>
 
 <body>
@@ -25,19 +25,11 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" style="position: relative; right: 90%; top: 10%"
-                                href="/clothes/list-categories/"> Categorias</a>
+                                href="/products/create/"> Crear producto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="position: relative; right: 50%; top: 10%" href="/clothes/create/">
-                                Publica tus prendas </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="position: relative; right: 60%; top: 10%"
-                                href="/clothes/list-clothes/"> Ropa disponible </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="position: relative; right: 120%; top: 10%"
-                                href="/about-me/"> Autora</a>
+                            <a class="nav-link" style="position: relative; right: 50%; top: 10%" href="/products/list/">
+                                Lista de productos </a>
                         </li>
                         {% if request.user.is_authenticated %}
                         <li class="nav-item">
@@ -72,7 +64,7 @@
                         <li class="navbar bg-body-tertiary">
                             <div class="container-fluid">
                                 <form class="d-flex" style="position: relative; left: 10%"
-                                    action="/clothes/list-clothes/" method="GET">
+                                    action="/products/list/" method="GET">
                                     <input class="form-control me-2" type="search" placeholder="Busca las prendas disponibles"
                                         aria-label="Search" name="search" style="width: 250px;">
                                     <button class="btn btn-outline-success" type="submit"

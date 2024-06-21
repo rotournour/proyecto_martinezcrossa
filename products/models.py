@@ -33,8 +33,6 @@ class Products (models.Model):
     def __str__(self):
         return f'{self.name} con codigo {self.idproduct} de de la categoria {self.category} con un precio de {self.price}'
     
-    def setUnavailable(self):
-        self.is_available = False
 
     def save(self, *args, **kwargs):
         

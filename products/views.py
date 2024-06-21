@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Products 
-from products.forms import ProductsForm, UpdateProducts
-from django.views.generic import DeleteView
+from products.forms import ProductsForm
+from django.views.generic import DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test, login_required
 
@@ -27,6 +27,7 @@ def create_product (request):
                 name=form.cleaned_data['name'],
                 price=form.cleaned_data['price'],
                 category = form.cleaned_data['category'],
+                is_available = form.cleaned_data['is_available'],
                 product_picture = form.cleaned_data ['product_picture']
                 
             )
@@ -42,37 +43,6 @@ def create_product (request):
             return render(request, 'products/create.html', context=context)
         
 
-def products_update(request, pk):
-    products = Products.objects.get(id=pk)
-    if request.method == 'GET':
-        context = {
-            'form': UpdateProducts(
-                initial={
-                    'price': products.price,
-                    'is_available': products.is_available
-                }
-            )
-        }
-
-        return render(request,'products/update.html', context=context)
-
-    elif request.method == 'POST':
-        form = UpdateProducts(request.POST)
-        if form.is_valid():
-            products.price = form.cleaned_data['price']
-            products.is_available = form.cleaned_data['is_available']
-            products.save()
-            
-            context = {
-                'message': 'El producto ha sido actualizado'
-            }
-        else:
-            context = {
-                'form_errors': form.errors,
-                'form': UpdateProducts()
-            }
-        return render(request, 'products/update.html', context=context)
-
 
 def list_products(request):
     all_products = Products.objects.all()
@@ -81,8 +51,21 @@ def list_products(request):
     }
     return render(request, 'products/list.html', context=context)
 
+class UpdateProducts(LoginRequiredMixin, UpdateView):
+    model = Products
+    fields = ['price', 'is_available']  
+    template_name = 'products/update.html'  
+    success_url = '/products/list/'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(id=self.kwargs['pk'])
 
 class DeleteProducts (LoginRequiredMixin, DeleteView):
     model = Products
     template_name = 'products/delete.html'
     success_url = '/products/list/'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(id=self.kwargs['pk'])

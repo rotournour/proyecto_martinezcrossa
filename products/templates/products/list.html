@@ -39,9 +39,9 @@ Productos
         <p class="card-text">Actualmente hay <b>{{ product.is_available }} en stock</b></p>
         <p class="card-text">Su precio es <b>${{ product.price }}</b></p>
     
-        <a href="/products/update/{{ product.idproduct }}/" class="btn btn-primary"
+        <a href="{% url 'update' pk=product.pk %}" class="btn btn-primary"
             style="background-color:#e08385; border: white; width: 220px; display: block; margin-left: auto; margin-right: auto;">Editar</a>
-        <a href="/products/delete/{{ product.idproduct }}/" class="btn btn-primary"
+        <a href="{% url 'delete' pk=product.pk %}" class="btn btn-primary"
             style="background-color: red; border: red; display: block; width: 220px; margin-left: auto; margin-right: auto;">Borrar</a>
     </div>
 </div>

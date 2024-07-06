@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Actualizacion de usuario
+{% endblock %}
+
+{% block content %}
+<h1>Te gustaria cambiar tu nombre de usuario? </h1>
+
+
+
+{% if form %}
+
+<form action="" method="POST">
+
+    {% csrf_token %}
+
+    <table>
+        {{form.as_table}}
+    </table>
+
+    <br>
+    <input type="submit" value="Actualizar nombre de usuario">
+
+</form>
+{% endif %}
+
+{% if message %}
+<div class="alert alert-success" role="alert">{{message}}</div>
+{% endif %}
+
+{% if errors %}
+{{errors}}
+{% endif %}
+
+
+{% endblock %}

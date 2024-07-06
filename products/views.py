@@ -12,7 +12,7 @@ def product_detail(request):
     return render(request, 'products/prueba.html', {'products': products})
 
 
-#@login_required
+@login_required
 def create_product (request):
     if request.method == 'GET':
         context = {

@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from users.forms import RegisterForm, UpdateForm, ProfileForm
+from users.forms import RegisterForm, UpdateForm
 from users.models import UserProfile
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 def user_login(request):
     if request.method == 'GET':

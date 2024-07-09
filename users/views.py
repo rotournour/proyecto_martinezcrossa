@@ -24,7 +24,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 context = {
-                    'message':f'Bienvenido/a a VintageStore {username}.'
+                    'message':f'Bienvenido/a a Martinez Crossa {username}.'
                 }
                 return render(request, 'users/login.html', context=context)
 

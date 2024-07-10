@@ -9,44 +9,102 @@ Productos
 
 {% block content %}
 
-<h1><br> <p style="margin-left: 10px;">Productos disponibles</p></h1>
-
-{% for product in all_products %}
-
-<div class="row">
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm">
-            <div class="row no-gutters">
-                <div class="col-md-6">
-                    {% if product.product_picture %}
-                    <img src="{{ product.product_picture.url }}" class="card-img card-img-fixed" alt="{{ product.name }}">
-                    {% else %}
-                    <img src="{% static 'img/default-product-image.png' %}" class="card-img card-img-fixed" alt="Imagen por defecto">
-                    {% endif %}
-                </div>
-                <div class="col-md-6">
-                    {% if product.qr_code %}
-                    <img src="{{ product.qr_code.url }}" class="card-img card-img-fixed" alt="Código QR de {{ product.name }}">
-                    {% else %}
-                    <p>QR no disponible</p>
-                    {% endif %}
-                </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .product-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-image {
+            flex: 1;
+        }
+        .product-details {
+            flex: 2;
+            padding-left: 20px;
+        }
+        .product-details h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .product-details p {
+            margin: 5px 0;
+        }
+        .product-qr {
+            flex: 1;
+        }
+        .actions {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .actions a {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            width: 100px; /* Ajusta el ancho según tus necesidades */
+        }
+        .edit-btn {
+            background-color: #4CAF50; /* Green */
+        }
+        .delete-btn {
+            background-color: #f44336; /* Red */
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Productos</h1>
+        {% for product in all_products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ product.product_picture.url }}" alt="Foto de {{ product.name }}">
             </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ product.name }}</h5>
-        <p class="card-text">Su categoría es <b>{{ product.category }}</b></p>
-        <p class="card-text">Su ID es <b>{{ product.idproduct }}</b></p>
-        <p class="card-text">Actualmente hay <b>{{ product.is_available }} en stock</b></p>
-        <p class="card-text">Su precio es <b>${{ product.price }}</b></p>
-        
-        {% if request.user.is_authenticated %}
-        <a href="{% url 'update' pk=product.pk %}" class="btn btn-primary"
-            style="background-color:#e08385; border: white; width: 220px; display: block; margin-left: auto; margin-right: auto;">Editar</a>
-        <a href="{% url 'delete' pk=product.pk %}" class="btn btn-primary"
-            style="background-color: red; border: red; display: block; width: 220px; margin-left: auto; margin-right: auto;">Borrar</a>
+            <div class="product-details">
+                <h2>{{ product.name }}</h2>
+                <p>Código: <b>{{ product.idproduct }}</b></p>
+                <p>Precio: ${{ product.price }}</p>
+                <p>Categoría: {{ product.category }}</p>
+                <p>Actualmente hay <b>{{ product.is_available }}</b> en stock</p>
+            </div>
+            <div class="product-qr">
+                <img src="{{ product.qr_code.url }}" alt="QR de {{ product.name }}">
+            </div>
+            {% if user.is_authenticated %}
+            <div class="actions">
+                <a href="{% url 'update' pk=product.pk %}" class="edit-btn">Editar</a>
+                <a href="{% url 'delete' pk=product.pk %}" class="delete-btn">Borrar</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
-</div>
-<br><br>
-    {% endif %}
-    {% endfor %}
+</body>
+</html>
+
 {% endblock %}

@@ -8,7 +8,7 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock %} | MartinezCrossa</title>
+    <title>{% block title %} {% endblock %} | Martinez Crossa</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -98,10 +98,14 @@
                     Hola {{request.user.username}} !!
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/users/update-user/">Actualizar usuario</a></li>
-                  <li><a class="dropdown-item" href="/users/logout/">Cerrar sesion</a></li>
+                    <li><a class="dropdown-item" href="/users/update-user/">Actualizar usuario</a></li>
+                    <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="dropdown-item" style="border: none; background: none; cursor: pointer;">Cerrar Sesión</button>
+                    </form>
+                    </li>
                 </ul>
-              </div>
             {% else %}
             <a class="btn btn-primary me-3" style="background-color:#7A695D; color: white; border: 0px; margin-right: 10px;" href="/users/login/" role="button">LogIn</a>
             <a class="btn btn-primary ms-2 me-3" style="background-color:#7A695D; color: white; border: 10px; margin-left: 5px;" href="/users/signup/" role="button">SignUp</a>

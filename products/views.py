@@ -45,9 +45,15 @@ def create_product (request):
 
 
 def list_products(request):
-    all_products = Products.objects.all()
+    query = request.GET.get('search')
+    if query:
+        all_products = Products.objects.filter(name__icontains=query)
+    else:
+        all_products = Products.objects.all()
+        
     context = {
-        'all_products':all_products
+        'all_products': all_products,
+        'search_term': query
     }
     return render(request, 'products/list.html', context=context)
 

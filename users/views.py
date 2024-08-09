@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from users.forms import RegisterForm, UpdateForm
+from users.forms import UpdateForm
 from users.models import UserProfile
 
 def user_login(request):
@@ -34,28 +34,6 @@ def user_login(request):
             'errors':'Tu usuario y/o contraseña son incorrectos. Vuelve a introducirlos'
         }
         return render(request, 'users/login.html', context=context)
-    
-    
-def register(request):
-    if request.method == 'GET':
-        form = RegisterForm()
-        context ={
-            'form':form
-        }
-        return render(request, 'users/register.html', context=context)
-
-    elif request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save() 
-            UserProfile.objects.create(user=user)
-            return redirect('login')
-        
-        context = {
-            'errors':form.errors,
-            'form':RegisterForm()
-        }
-        return render(request, 'users/register.html', context=context)
     
     
 @login_required

@@ -2,6 +2,9 @@ from django.db import models
 import qrcode
 from io import BytesIO
 from django.core.files import File
+from django.urls import reverse
+from django.conf import settings
+
 
 
 class Category (models.Model):
@@ -10,10 +13,12 @@ class Category (models.Model):
     def __str__(self):
         return self.categories
     
+    
     class Meta():
         db_table = "Categories"
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+        ordering = ['categories'] 
 
 
 class Products (models.Model):
@@ -34,15 +39,27 @@ class Products (models.Model):
         return f'{self.name} con codigo {self.idproduct} de de la categoria {self.category} con un precio de {self.price}'
     
 
+    def get_absolute_url(self):
+        return reverse('producto_detalle', kwargs={'idproduct': self.idproduct})
+
     def save(self, *args, **kwargs):
-        
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=10,
             border=4,
         )
-        qr.add_data(f'Codigo del producto: {self.idproduct} - Nombre del producto: {self.name} - Precio del producto:{self.price} - Categoria del producto: {self.category} - Stock: {self.is_available}')
+        # Obtener el dominio completo
+                # Detectar si estás en un entorno local
+        if settings.DEBUG:
+            # Para desarrollo local
+            domain = 'http://localhost:8000'
+        else:
+            # Para producción
+            domain = settings.SITE_URL
+        
+        full_url = f'{domain}{self.get_absolute_url()}'
+        qr.add_data(full_url)
         qr.make(fit=True)
 
         img = qr.make_image(fill='black', back_color='white')
@@ -53,5 +70,10 @@ class Products (models.Model):
 
         super().save(*args, **kwargs)
 
+    class Meta:
+        db_table = "Products"
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
 
-
+    def __str__(self):
+        return f'{self.name} con codigo {self.idproduct} de la categoria {self.category} con un precio de {self.price}'

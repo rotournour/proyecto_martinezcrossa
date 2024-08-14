@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ producto.name }}</title>
+</head>
+<body>
+    <h1>{{ producto.name }}</h1>
+    <p>Código: {{ producto.idproduct }}</p>
+    <p>Precio: ${{ producto.price }}</p>
+    <p>Categoría: {{ producto.category }}</p>
+    <p>Stock disponible: {{ producto.is_available }}</p>
+    {% if producto.product_picture %}
+    <img src="{{ producto.product_picture.url }}" alt="Imagen de {{ producto.name }}">
+    {% endif %}
+</body>
+</html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Products 
 from products.forms import ProductsForm
 from django.views.generic import DeleteView, UpdateView
@@ -49,7 +49,7 @@ def list_products(request):
     if query:
         all_products = Products.objects.filter(name__icontains=query)
     else:
-        all_products = Products.objects.all()
+        all_products = Products.objects.all().order_by('name')
         
     context = {
         'all_products': all_products,
@@ -75,3 +75,8 @@ class DeleteProducts (LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(id=self.kwargs['pk'])
+    
+
+def product_details(request, idproduct):
+    producto = get_object_or_404(Products, idproduct=idproduct)
+    return render(request, 'product_details.html', {'producto': producto})

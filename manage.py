@@ -9,6 +9,8 @@ def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'martinezcrossa.settings')
     try:
         from django.core.management import execute_from_command_line
+        from django.core.wsgi import get_wsgi_application
+        app = get_wsgi_application()
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "

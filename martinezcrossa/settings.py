@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import psycopg2
+from urllib.parse import urlparse, parse_qs
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -90,17 +92,39 @@ WSGI_APPLICATION = 'martinezcrossa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#DATABASES = {
+#        'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'martinezcrossa',
+#        'USER': 'rotournour',
+#        'PASSWORD': '112703',
+#       'HOST': 'localhost',  # O la dirección IP de tu servidor PostgreSQL
+#        'PORT': '5432',       # Puerto por defecto de PostgreSQL
+#    }
+#}
+
+
+# Connection string proporcionada por Vercel
+DATABASE_URL = "postgres://default:qBMWHu6bOY1S@ep-nameless-poetry-a42dbte3.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+
+# Parsear la URL de conexión
+url = urlparse(DATABASE_URL)
+query = parse_qs(url.query)
+
+# Crear el diccionario DATABASES similar a settings.py en Django
 DATABASES = {
-        'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'martinezcrossa',
-        'USER': 'rotournour',
-        'PASSWORD': '112703',
-        'HOST': 'localhost',  # O la dirección IP de tu servidor PostgreSQL
-        'PORT': '5432',       # Puerto por defecto de PostgreSQL
+        'NAME': url.path[1:],  # Eliminar el primer '/' de la ruta para obtener el nombre
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port,
+        'OPTIONS': {
+            'sslmode': query.get('sslmode', ['disable'])[0]
+        }
     }
 }
-
 
 
 # Password validation

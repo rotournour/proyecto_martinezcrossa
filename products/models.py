@@ -5,7 +5,7 @@ from django.core.files import File
 from django.urls import reverse
 from django.conf import settings
 
-
+""" asfasdsa"""
 
 class Category (models.Model):
     categories = models.CharField(max_length=100, null=True, verbose_name= "Categoria del producto")

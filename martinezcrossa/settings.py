@@ -32,7 +32,7 @@ DEBUG = True
 
 SITE_URL = 'martinezcrossa.vercel.app'  
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition

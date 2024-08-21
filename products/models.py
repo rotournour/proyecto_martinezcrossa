@@ -10,6 +10,8 @@ from django.conf import settings
 class Category (models.Model):
     categories = models.CharField(max_length=100, null=True, verbose_name= "Categoria del producto")
     
+
+    
     def __str__(self):
         return self.categories
     

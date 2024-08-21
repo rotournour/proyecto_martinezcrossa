@@ -1,0 +1,6 @@
+bin/
+lib/
+martinezcrossa/__pycache__/
+users/__pycache__/
+products/__pycache__/
+staticfiles/

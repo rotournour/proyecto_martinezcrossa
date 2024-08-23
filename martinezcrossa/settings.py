@@ -129,6 +129,23 @@ DATABASES = {
 }
 
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Configuración de Amazon S3
+AWS_STORAGE_BUCKET_NAME = os.getenv('martinezcrossa-s3')
+AWS_S3_REGION_NAME = os.getenv('us-east-2')
+AWS_S3_CUSTOM_DOMAIN = os.getenv('martinezcrossa-s3.s3.amazonaws.com')
+AWS_LOCATION = os.getenv('media')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = 'https://martinezcrossa-s3.s3.amazonaws.com/media/' #Archivos estaticos
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_DEFAULT_ACL = None  # Permite subir archivos públicos
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
